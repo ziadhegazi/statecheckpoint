@@ -8,8 +8,18 @@ export class App extends Component {
   
     this.state = {
        message: "Show Profile",
-       shows: false
+       shows: false,
+       count: 0
     }
+  }
+
+  componentDidMount() {
+    this.timer = setInterval(() => this.counter,1000);
+    console.log(this.counter);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
   }
 
   // Defining person
@@ -18,7 +28,6 @@ export class App extends Component {
     bio: this.props.bio,
     profession: this.props.profession
   }
-
 
   // Button function
   buttonclick = () => {
@@ -38,6 +47,12 @@ export class App extends Component {
     }
   };
 
+  counter = () => {
+    this.setState({
+      count: this.state.count+=1,
+    })
+  }
+
   // rendering content
   render() {
     return (
@@ -49,6 +64,7 @@ export class App extends Component {
           <p>{this.person.bio}</p>
         </div>
         <button type="button" onClick={this.buttonclick}>{this.state.message}</button>
+        <div>{this.timer}</div>
       </div>
     )
   }
