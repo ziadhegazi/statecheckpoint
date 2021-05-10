@@ -13,15 +13,6 @@ export class App extends Component {
     }
   }
 
-  componentDidMount() {
-    this.timer = setInterval(() => this.counter,1000);
-    console.log(this.counter);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timer);
-  }
-
   // Defining person
   person = {
     fullname: this.props.fullname,
@@ -36,20 +27,25 @@ export class App extends Component {
       this.setState({
         message: "Hide Profile",
         shows: true,
+        count: 0,
       });
+      setInterval(() => this.counter(),1000);
+      console.time();
       profile.style.display = "contents"
     }else {
       this.setState({
         message: "Show Profile",
-        shows: false
+        shows: false,
+        count: 0
       });
+      clearInterval(this.counter);
       profile.style.display = "none"
     }
   };
 
   counter = () => {
     this.setState({
-      count: this.state.count+=1,
+      count: this.state.count + 1,
     })
   }
 
@@ -64,7 +60,7 @@ export class App extends Component {
           <p>{this.person.bio}</p>
         </div>
         <button type="button" onClick={this.buttonclick}>{this.state.message}</button>
-        <div>{this.timer}</div>
+        <div>{this.state.count}</div>
       </div>
     )
   }
